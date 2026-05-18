@@ -1,5 +1,6 @@
 import logging
 from .api import BoschApi
+from .sensor import BoschSensor
 
 LOGGER = logging.getLogger(__name__)
 
@@ -22,18 +23,53 @@ async def async_setup_entry(hass, entry):
 
 	devices = await api.get_devices()
 
-	LOGGER.warning(f"Bosch devices: {devices}")
+	bike = devices["my_ebikes"][0]
 
-	hass.data[DOMAIN][entry.entry_id] = {
-		"api": api,
-		"devices": devices
-	}
-	
-	await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
+	sensors = [
+		BoschSensor(
+			"bike_name",
+			"Bosch Bike Name",
+			bike["drive_unit"]["device_name"]
+		),
+		BoschSensor(
+			"motor",
+			"Bosch Motor",
+			bike["drive_unit"]["product_line_name"]
+		),
+		BoschSensor(
+			"display",
+			"Bosch Display",
+			bike["buis"][0]["device_name"]
+		),
+		BoschSensor(
+			"battery",
+			"Bosch Battery",
+			bike["batteries"][0]["device_name"]
+		)
+	]
+
+	hass.states.async_set(
+		"sensor.bosch_bike_name",
+		bike["drive_unit"]["device_name"]
+	)
+
+	hass.states.async_set(
+		"sensor.bosch_motor",
+		bike["drive_unit"]["product_line_name"]
+	)
+
+	hass.states.async_set(
+		"sensor.bosch_display",
+		bike["buis"][0]["device_name"]
+	)
+
+	hass.states.async_set(
+		"sensor.bosch_battery",
+		bike["batteries"][0]["device_name"]
+	)
 
 	return True
 
 
 async def async_unload_entry(hass, entry):
-	hass.data[DOMAIN].pop(entry.entry_id)
 	return True
