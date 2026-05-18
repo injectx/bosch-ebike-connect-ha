@@ -1,0 +1,11 @@
+{
+  "domain": "bosch_ebike_connect",
+  "name": "Bosch eBike Connect",
+  "version": "0.0.1",
+  "documentation": "https://github.com/injectx/bosch-ebike-connect-ha",
+  "issue_tracker": "https://github.com/injectx/bosch-ebike-connect-ha/issues",
+  "dependencies": [],
+  "codeowners": ["@injectx"],
+  "requirements": [],
+  "iot_class": "cloud_polling"
+}
