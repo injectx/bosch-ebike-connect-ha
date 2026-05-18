@@ -27,36 +27,16 @@ async def async_setup_entry(hass, entry):
 	devices = await api.get_devices()
 
 	LOGGER.warning("Bosch devices loaded")
-	LOGGER.warning(f"Bosch devices: {devices}")
-
-	bike = devices["my_ebikes"][0]
-
-	hass.states.async_set(
-		"sensor.bosch_bike_name",
-		bike["drive_unit"]["device_name"]
-	)
-
-	hass.states.async_set(
-		"sensor.bosch_motor",
-		bike["drive_unit"]["product_line_name"]
-	)
-
-	hass.states.async_set(
-		"sensor.bosch_display",
-		bike["buis"][0]["device_name"]
-	)
-
-	hass.states.async_set(
-		"sensor.bosch_battery",
-		bike["batteries"][0]["device_name"]
-	)
-
-	LOGGER.warning("Bosch sensors created")
 
 	hass.data[DOMAIN][entry.entry_id] = {
 		"api": api,
 		"devices": devices
 	}
+
+	await hass.config_entries.async_forward_entry_setups(
+		entry,
+		["sensor"]
+	)
 
 	return True
 
