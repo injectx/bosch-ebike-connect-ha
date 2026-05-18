@@ -12,22 +12,26 @@ async def async_setup_entry(hass, entry, async_add_entities):
 		BoschSensor(
 			"bike_name",
 			"Bosch Bike Name",
-			bike["drive_unit"]["device_name"]
+			bike["drive_unit"]["device_name"],
+			"mdi:bike"
 		),
 		BoschSensor(
 			"motor",
 			"Bosch Motor",
-			bike["drive_unit"]["product_line_name"]
+			bike["drive_unit"]["product_line_name"],
+			"mdi:engine"
 		),
 		BoschSensor(
 			"display",
 			"Bosch Display",
-			bike["buis"][0]["device_name"]
+			bike["buis"][0]["device_name"],
+			"mdi:monitor-dashboard"
 		),
 		BoschSensor(
 			"battery",
 			"Bosch Battery",
-			bike["batteries"][0]["device_name"]
+			bike["batteries"][0]["device_name"],
+			"mdi:battery"
 		)
 	]
 
@@ -36,11 +40,12 @@ async def async_setup_entry(hass, entry, async_add_entities):
 
 class BoschSensor(SensorEntity):
 
-	def __init__(self, unique_id, name, value):
+	def __init__(self, unique_id, name, value, icon):
 
 		self._attr_unique_id = unique_id
 		self._attr_name = name
 		self._attr_native_value = value
+		self._attr_icon = icon
 
 		self._attr_device_info = {
 			"identifiers": {
