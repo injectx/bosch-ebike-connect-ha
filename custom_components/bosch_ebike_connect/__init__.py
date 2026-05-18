@@ -17,7 +17,14 @@ async def async_setup_entry(hass, entry):
 
 	await api.login()
 
-	hass.data[DOMAIN][entry.entry_id] = api
+	devices = await api.get_devices()
+
+	print(devices)
+
+	hass.data[DOMAIN][entry.entry_id] = {
+		"api": api,
+		"devices": devices
+	}
 
 	return True
 
