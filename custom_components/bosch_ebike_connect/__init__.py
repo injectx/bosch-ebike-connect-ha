@@ -1,3 +1,5 @@
+from .api import BoschApi
+
 DOMAIN = "bosch_ebike_connect"
 
 
@@ -7,7 +9,16 @@ async def async_setup(hass, config):
 
 
 async def async_setup_entry(hass, entry):
-	hass.data[DOMAIN][entry.entry_id] = entry.data
+
+	email = entry.data["email"]
+	password = entry.data["password"]
+
+	api = BoschApi(email, password)
+
+	await api.login()
+
+	hass.data[DOMAIN][entry.entry_id] = api
+
 	return True
 
 
