@@ -1,8 +1,9 @@
 from homeassistant import config_entries
-import voluptuous as vol
+
+DOMAIN = "bosch_ebike_connect"
 
 
-class BoschFlowHandler(config_entries.ConfigFlow, domain="bosch_ebike_connect"):
+class BoschFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 	VERSION = 1
 
 	async def async_step_user(self, user_input=None):
