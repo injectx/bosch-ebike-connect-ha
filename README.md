@@ -1,74 +1,68 @@
-![Logo](admin/bosch-ebike.png)
+# Bosch eBike Connect for Home Assistant 🚴
 
-# ioBroker.bosch-ebike
+Custom Home Assistant integration for legacy Bosch eBike systems using **Bosch eBike Connect**, including support for older systems such as:
 
-[![NPM version](https://img.shields.io/npm/v/iobroker.bosch-ebike.svg)](https://www.npmjs.com/package/iobroker.bosch-ebike)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.bosch-ebike.svg)](https://www.npmjs.com/package/iobroker.bosch-ebike)
-![Number of Installations](https://iobroker.live/badges/bosch-ebike-installed.svg)
-![Current version in stable repository](https://iobroker.live/badges/bosch-ebike-stable.svg)
-[![Dependency Status](https://img.shields.io/david/TA2k/iobroker.bosch-ebike.svg)](https://david-dm.org/TA2k/iobroker.bosch-ebike)
+- Kiox (legacy, non 300/500)
+- Bosch System 2
+- Older Bosch eBike Connect devices
 
-[![NPM](https://nodei.co/npm/iobroker.bosch-ebike.png?downloads=true)](https://nodei.co/npm/iobroker.bosch-ebike/)
+## Current status
 
-**Tests:** ![Test and Release](https://github.com/TA2k/ioBroker.bosch-ebike/workflows/Test%20and%20Release/badge.svg)
+⚠️ Early development / experimental
 
-## bosch-ebike adapter for ioBroker
+This project started as an attempt to bring support for legacy Bosch eBike Connect devices into Home Assistant. The newer Bosch Smart System already has integrations available, but older Kiox and Bosch eBike Connect systems are often left unsupported.
 
-Adapter für Bosch eBike
+Current progress:
 
-## Loginablauf
+- [x] Home Assistant custom component structure
+- [x] HACS support
+- [ ] Bosch eBike Connect authentication
+- [ ] Device discovery
+- [ ] Sensor entities
+- [ ] Configuration flow
+- [ ] Diagnostics
 
-Die Bosch eBike Mail und Passwort eingeben.
+## Planned sensors
 
-## Steuern
+Examples of sensors planned:
 
-bosch-ebike.0.id.remote auf true/false setzen steuert den jeweiligen Befehl
+- Battery percentage 🔋
+- Estimated range
+- Odometer / total distance
+- Speed
+- Cadence
+- Power
+- Assistance level
+- Torque
+- Ride statistics
 
-## Diskussion und Fragen
+## Installation
 
-<https://forum.iobroker.net/topic/55902/test-adapter-bosch-ebik-connect-flow>
+### HACS (Custom Repository)
 
-## Changelog
-### 0.1.12 (2025-01-14)
+1. Open HACS
+2. Open Custom repositories
+3. Add:
 
-- fix for login use code url instead of captcha
+```text
+https://github.com/injectx/bosch-ebike-connect-ha
+```
 
-### 0.1.11 (2025-01-03)
+Type:
 
-- fix for login. Deletion of the instance is necessary if the settings screen is not loading.
+```text
+Integration
+```
 
-### 0.1.9 (2024-11-25)
+4. Install
+5. Restart Home Assistant
 
-- fix for login
+## Disclaimer
 
-### 0.1.5
+This project is unofficial and not affiliated with Bosch.
 
-- (TA2k) login fix
+Bosch may change their APIs at any time which can affect functionality.
 
-### 0.0.2
+## Contributions
 
-- (TA2k) initial release
-
-## License
-
-MIT License
-
-Copyright (c) 2022-2030 TA2k <tombox2020@gmail.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Pull requests, testing and feedback are welcome.
