@@ -1,4 +1,7 @@
+import logging
 from .api import BoschApi
+
+LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "bosch_ebike_connect"
 
@@ -19,7 +22,7 @@ async def async_setup_entry(hass, entry):
 
 	devices = await api.get_devices()
 
-	print(devices)
+	LOGGER.warning(f"Bosch devices: {devices}")
 
 	hass.data[DOMAIN][entry.entry_id] = {
 		"api": api,
