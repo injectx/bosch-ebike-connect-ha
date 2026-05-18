@@ -6,6 +6,7 @@ async def async_setup(hass, config):
 
 
 async def async_setup_entry(hass, entry):
+	hass.data.setdefault(DOMAIN, {})
 	return True
 
 
