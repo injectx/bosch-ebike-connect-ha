@@ -1,68 +1,87 @@
-# Bosch eBike Connect for Home Assistant 🚴
+# Bosch eBike Connect for Home Assistant
 
-Custom Home Assistant integration for legacy Bosch eBike systems using **Bosch eBike Connect**, including support for older systems such as:
+Custom Home Assistant integration for older Bosch eBike systems using the Bosch eBike Connect platform.
 
-- Kiox (legacy, non 300/500)
-- Bosch System 2
-- Older Bosch eBike Connect devices
+Supports Bosch System 2 devices such as:
 
-## Current status
+- Kiox (non 300/500)
+- Bosch eBike Connect app
+- Performance Line CX
+- PowerTube batteries
+- Other Bosch Connect compatible systems
 
-⚠️ Early development / experimental
+## Features
 
-This project started as an attempt to bring support for legacy Bosch eBike Connect devices into Home Assistant. The newer Bosch Smart System already has integrations available, but older Kiox and Bosch eBike Connect systems are often left unsupported.
+Current functionality:
 
-Current progress:
+✅ Login using Bosch eBike Connect account  
+✅ Automatic device discovery  
+✅ Home Assistant device registration  
+✅ Bike information sensors:
 
-- [x] Home Assistant custom component structure
-- [x] HACS support
-- [ ] Bosch eBike Connect authentication
-- [ ] Device discovery
-- [ ] Sensor entities
-- [ ] Configuration flow
-- [ ] Diagnostics
+- Bike name
+- Motor
+- Display
+- Battery model
 
-## Planned sensors
+## Planned
 
-Examples of sensors planned:
+Potential future features:
 
-- Battery percentage 🔋
-- Estimated range
-- Odometer / total distance
-- Speed
-- Cadence
-- Power
-- Assistance level
-- Torque
-- Ride statistics
+- Trip history
+- Last ride statistics
+- Distance tracking
+- Average speed
+- Elevation gain
+- Ride summaries
+- Additional metadata sensors
 
 ## Installation
 
-### HACS (Custom Repository)
+### HACS
 
 1. Open HACS
-2. Open Custom repositories
-3. Add:
+2. Go to Integrations
+3. Click the three dots in the top-right corner
+4. Select "Custom repositories"
+5. Add:
 
-```text
+```
 https://github.com/injectx/bosch-ebike-connect-ha
 ```
 
-Type:
+Category:
 
-```text
+```
 Integration
 ```
 
-4. Install
-5. Restart Home Assistant
+6. Install Bosch eBike Connect
+7. Restart Home Assistant
+8. Add the integration from Devices & Services
+
+## Configuration
+
+Enter:
+
+- Bosch eBike Connect email
+- Bosch eBike Connect password
+
+## Notes
+
+This integration is intended for older Bosch systems using the Bosch eBike Connect app.
+
+It does not currently support Bosch Flow based systems.
+
+Some live values such as battery percentage, cadence and real-time bike telemetry may not be exposed through the Bosch Connect cloud API.
 
 ## Disclaimer
 
-This project is unofficial and not affiliated with Bosch.
+This project is unofficial and is not affiliated with Bosch.
 
-Bosch may change their APIs at any time which can affect functionality.
+## Credits
 
-## Contributions
+Based on reverse engineering and inspiration from:
 
-Pull requests, testing and feedback are welcome.
+- TA2k ioBroker Bosch eBike adapter
+- Bosch eBike Connect platform
