@@ -1,6 +1,6 @@
 import aiohttp
 import time
-
+import logging
 
 class BoschApi:
 
@@ -132,11 +132,20 @@ class BoschApi:
 				headers=headers
 			) as response:
 
-				print("STATISTICS STATUS:", response.status)
-
+				import logging
+				
+				_LOGGER = logging.getLogger(__name__)
+				
+				_LOGGER.warning(
+					"STATISTICS STATUS: %s",
+					response.status
+				)
+				
 				text = await response.text()
-
-				print("STATISTICS RESPONSE:")
-				print(text[:1000])
-
+				
+				_LOGGER.warning(
+					"STATISTICS RESPONSE: %s",
+					text[:1000]
+				)
+				
 				return await response.json()
