@@ -8,8 +8,20 @@ async def async_setup_entry(hass, entry, async_add_entities):
 	devices = data["devices"]
 	trips = data["trips"]
 	detail = data.get("last_detail", {})
-
+	
 	bike = devices["my_ebikes"][0]
+	
+	entities = [
+	
+		BoschSensor(
+			"debug_detail",
+			"Debug Detail",
+			str(detail)[:255],
+			"mdi:bug",
+			"ride"
+		)
+	
+	]
 
 	entities = []
 
