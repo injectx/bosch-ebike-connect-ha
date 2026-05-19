@@ -13,8 +13,6 @@ async def async_setup(hass, config):
 
 async def async_setup_entry(hass, entry):
 
-	LOGGER.warning("Bosch setup started")
-
 	email = entry.data["email"]
 	password = entry.data["password"]
 
@@ -22,18 +20,8 @@ async def async_setup_entry(hass, entry):
 
 	await api.login()
 
-	LOGGER.warning("Bosch login success")
-
 	devices = await api.get_devices()
 	trips = await api.get_trips()
-	
-	LOGGER.warning(f"Bosch trips: {trips}")
-	
-	trips = await api.get_trips()
-	
-	LOGGER.warning(f"Bosch trips: {trips}")
-
-	LOGGER.warning("Bosch devices loaded")
 
 	hass.data[DOMAIN][entry.entry_id] = {
 		"api": api,
@@ -51,6 +39,12 @@ async def async_setup_entry(hass, entry):
 
 async def async_unload_entry(hass, entry):
 
-	hass.data[DOMAIN].pop(entry.entry_id, None)
+	unload_ok = await hass.config_entries.async_unload_platforms(
+		entry,
+		["sensor"]
+	)
 
-	return True
+	if unload_ok:
+		hass.data[DOMAIN].pop(entry.entry_id)
+
+	return unload_ok
