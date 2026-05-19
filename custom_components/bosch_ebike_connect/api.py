@@ -99,7 +99,14 @@ class BoschApi:
 				headers=headers
 			) as response:
 
-				return await response.json()
+				data = await response.json()
+				
+				_LOGGER.warning(
+					"TRIP DETAIL KEYS: %s",
+					list(data.keys())
+				)
+				
+				return data
 
 
 	async def get_statistics(self):
