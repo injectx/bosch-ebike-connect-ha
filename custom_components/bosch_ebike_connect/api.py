@@ -2,12 +2,16 @@ import aiohttp
 import time
 import logging
 
+_LOGGER = logging.getLogger(__name__)
+
+
 class BoschApi:
 
 	def __init__(self, email, password):
 		self.email = email
 		self.password = password
 		self.session = None
+
 
 	async def login(self):
 
@@ -54,7 +58,7 @@ class BoschApi:
 		async with aiohttp.ClientSession() as session:
 
 			async with session.get(
-				"https://www.ebike-connect.com/ebikeconnect/api/portal/statistics/all_statistics",
+				"https://www.ebike-connect.com/ebikeconnect/api/app/devices/my_ebikes",
 				headers=headers
 			) as response:
 
@@ -119,7 +123,7 @@ class BoschApi:
 		)
 
 		headers = {
-			"accept": "application/vnd.ebike-connect.com.v4+json, application/json",
+			"accept": "application/json",
 			"protect-from": "CSRF",
 			"user-agent": "oea_ios/4.8.1",
 			"x-authorization": token
@@ -128,24 +132,20 @@ class BoschApi:
 		async with aiohttp.ClientSession() as session:
 
 			async with session.get(
-				"https://www.ebike-connect.com/ebikeconnect/api/dashboard/all_statistics",
+				"https://www.ebike-connect.com/ebikeconnect/api/portal/statistics/all_statistics",
 				headers=headers
 			) as response:
 
-				import logging
-				
-				_LOGGER = logging.getLogger(__name__)
-				
 				_LOGGER.warning(
 					"STATISTICS STATUS: %s",
 					response.status
 				)
-				
+
 				text = await response.text()
-				
+
 				_LOGGER.warning(
 					"STATISTICS RESPONSE: %s",
 					text[:1000]
 				)
-				
+
 				return await response.json()
