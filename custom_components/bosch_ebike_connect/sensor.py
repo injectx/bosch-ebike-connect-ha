@@ -11,9 +11,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
 	
 	bike = devices["my_ebikes"][0]
 	
-	entities = [
-	
-	]
+	entities = []
 
 	# Bike info
 
