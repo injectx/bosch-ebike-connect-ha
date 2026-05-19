@@ -9,5 +9,4 @@
   "requirements": [],
   "iot_class": "cloud_polling",
   "config_flow": true,
-  "logo": "images/logo.png"
 }

@@ -4,41 +4,47 @@
   <img src="images/logo.png" width="150">
 </p>
 
-Custom Home Assistant integration for older Bosch eBike systems using the Bosch eBike Connect platform.
+Custom Home Assistant integration for Bosch eBike systems using the Bosch eBike Connect platform.
 
-Supports Bosch System 2 devices such as:
+Supports older Bosch systems such as:
 
 - Kiox (non 300/500)
 - Bosch eBike Connect app
 - Performance Line CX
 - PowerTube batteries
-- Other Bosch Connect compatible systems
+- Bosch System 2 compatible bikes
 
 ## Features
 
 Current functionality:
 
-✅ Login using Bosch eBike Connect account  
-✅ Automatic device discovery  
-✅ Home Assistant device registration  
-✅ Bike information sensors:
+### Bike information
 
-- Bike name
+✅ Automatic Bosch device discovery  
+✅ Home Assistant device registration  
+✅ Bike metadata sensors
+
+Available sensors:
+
+- Bike Name
 - Motor
 - Display
 - Battery model
 
-## Planned
+### Last Ride statistics
 
-Potential future features:
+✅ Ride history retrieval  
+✅ Automatic ride segment aggregation  
+✅ Dedicated Last Ride device
 
-- Trip history
-- Last ride statistics
-- Distance tracking
-- Average speed
-- Elevation gain
-- Ride summaries
-- Additional metadata sensors
+Available sensors:
+
+- Last Ride Distance
+- Last Ride Duration
+- Last Ride Average Speed
+- Last Ride Maximum Speed
+- Last Ride Calories
+- Last Ride Location
 
 ## Installation
 
@@ -46,7 +52,7 @@ Potential future features:
 
 1. Open HACS
 2. Go to Integrations
-3. Click the three dots in the top-right corner
+3. Open the three-dot menu
 4. Select "Custom repositories"
 5. Add:
 
@@ -62,7 +68,7 @@ Integration
 
 6. Install Bosch eBike Connect
 7. Restart Home Assistant
-8. Add the integration from Devices & Services
+8. Add the integration via Devices & Services
 
 ## Configuration
 
@@ -73,11 +79,31 @@ Enter:
 
 ## Notes
 
-This integration is intended for older Bosch systems using the Bosch eBike Connect app.
+This integration currently targets Bosch systems using the Bosch eBike Connect platform.
 
-It does not currently support Bosch Flow based systems.
+Not currently supported:
 
-Some live values such as battery percentage, cadence and real-time bike telemetry may not be exposed through the Bosch Connect cloud API.
+- Bosch Flow app systems
+- Kiox 300
+- Kiox 500
+- Smart System devices
+
+Some live bike telemetry appears unavailable through the Bosch Connect cloud API:
+
+- Live battery percentage
+- Cadence
+- Real-time speed
+- Current motor power
+
+## Planned
+
+Potential future features:
+
+- Ride history entities
+- Total distance statistics
+- Ride maps (if GPS coordinates are available)
+- Additional ride analytics
+- Activity dashboards
 
 ## Disclaimer
 
@@ -85,7 +111,7 @@ This project is unofficial and is not affiliated with Bosch.
 
 ## Credits
 
-Based on reverse engineering and inspiration from:
+Based on inspiration and reverse engineering work from:
 
 - TA2k ioBroker Bosch eBike adapter
 - Bosch eBike Connect platform
