@@ -101,7 +101,7 @@ class BoschApi:
 		async with aiohttp.ClientSession() as session:
 
 			async with session.get(
-				f"https://www.ebike-connect.com/ebikeconnect/api/app/activities/trip/{ride_id}/detail",
+				f"https://www.ebike-connect.com/ebikeconnect/api/activities/trip/details/{ride_id}",
 				headers=headers
 			) as response:
 
