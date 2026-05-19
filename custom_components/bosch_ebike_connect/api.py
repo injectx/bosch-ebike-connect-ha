@@ -102,6 +102,20 @@ class BoschApi:
 				data = await response.json()
 				
 				_LOGGER.warning(
+					"ASSIST DATA: %s",
+					data.get("significant_assistance_level_percentages")
+				)
+				
+				_LOGGER.warning(
+					"POWER DATA: %s",
+					{
+						"driver": data.get("total_driver_consumption_percentage"),
+						"battery": data.get("total_battery_consumption_percentage"),
+						"driver_power": data.get("average_driver_power")
+					}
+				)
+				
+				_LOGGER.warning(
 					"TRIP DETAIL KEYS: %s",
 					list(data.keys())
 				)
