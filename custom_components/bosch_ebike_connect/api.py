@@ -38,6 +38,7 @@ class BoschApi:
 
 				return data
 
+
 	async def get_devices(self):
 
 		token = (
@@ -57,13 +58,8 @@ class BoschApi:
 				headers=headers
 			) as response:
 
-				print("STATUS:", response.status)
-				
-				text = await response.text()
-				
-				print(text[:1000])
-				
 				return await response.json()
+
 
 	async def get_trips(self):
 
@@ -90,49 +86,57 @@ class BoschApi:
 
 				return await response.json()
 
+
 	async def get_trip_detail(self, ride_id):
-	
+
 		token = (
 			f"{self.session['token_value']}:"
 			f"{self.session['mobile_id']}"
 		)
-	
+
 		headers = {
 			"accept": "application/vnd.ebike-connect.com.v4+json, application/json",
 			"protect-from": "CSRF",
 			"user-agent": "oea_ios/4.8.1",
 			"x-authorization": token
 		}
-	
+
 		async with aiohttp.ClientSession() as session:
-	
+
 			async with session.get(
 				f"https://www.ebike-connect.com/ebikeconnect/api/activities/trip/details/{ride_id}",
 				headers=headers
 			) as response:
-	
+
 				return await response.json()
-	
-	
+
+
 	async def get_statistics(self):
-	
+
 		token = (
 			f"{self.session['token_value']}:"
 			f"{self.session['mobile_id']}"
 		)
-	
+
 		headers = {
 			"accept": "application/vnd.ebike-connect.com.v4+json, application/json",
 			"protect-from": "CSRF",
 			"user-agent": "oea_ios/4.8.1",
 			"x-authorization": token
 		}
-	
+
 		async with aiohttp.ClientSession() as session:
-	
+
 			async with session.get(
 				"https://www.ebike-connect.com/ebikeconnect/api/dashboard/all_statistics",
 				headers=headers
 			) as response:
-	
+
+				print("STATISTICS STATUS:", response.status)
+
+				text = await response.text()
+
+				print("STATISTICS RESPONSE:")
+				print(text[:1000])
+
 				return await response.json()
