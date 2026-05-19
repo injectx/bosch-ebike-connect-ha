@@ -25,6 +25,9 @@ async def async_setup_entry(hass, entry):
 	LOGGER.warning("Bosch login success")
 
 	devices = await api.get_devices()
+	trips = await api.get_trips()
+	
+	LOGGER.warning(f"Bosch trips: {trips}")
 	
 	trips = await api.get_trips()
 	
@@ -34,7 +37,8 @@ async def async_setup_entry(hass, entry):
 
 	hass.data[DOMAIN][entry.entry_id] = {
 		"api": api,
-		"devices": devices
+		"devices": devices,
+		"trips": trips
 	}
 
 	await hass.config_entries.async_forward_entry_setups(
