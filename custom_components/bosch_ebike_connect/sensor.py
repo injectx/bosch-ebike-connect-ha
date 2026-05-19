@@ -49,7 +49,42 @@ async def async_setup_entry(hass, entry, async_add_entities):
 	
 	if trips:
 	
-		ride = trips[0]["ride_headers"][0]
+		rides = trips[0]["ride_headers"]
+		
+		distance = round(
+			sum(float(r["total_distance"]) for r in rides) / 1000,
+			1
+		)
+		
+		duration = round(
+			sum(int(r["driving_time"]) for r in rides) / 60000
+		)
+		
+		calories = round(
+			sum(float(r["calories"]) for r in rides)
+		)
+		
+		max_speed = max(
+			float(r["max_speed"]) for r in rides
+		)
+		
+		avg_speed = round(
+			sum(
+				float(r["avg_speed"]) *
+				float(r["total_distance"])
+				for r in rides
+			) /
+			sum(
+				float(r["total_distance"])
+				for r in rides
+			),
+			1
+		)
+		
+		location = rides[-1].get(
+			"title",
+			"Unknown"
+		)
 	
 		distance = round(float(ride["total_distance"]) / 1000, 1)
 		duration = round(int(ride["driving_time"]) / 60000)
