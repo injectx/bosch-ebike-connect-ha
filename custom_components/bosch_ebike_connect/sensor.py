@@ -46,58 +46,61 @@ async def async_setup_entry(hass, entry, async_add_entities):
 	])
 
 	# Last ride
-
+	
 	if trips:
-
+	
 		ride = trips[0]["ride_headers"][0]
-
+	
+		distance = round(float(ride["total_distance"]) / 1000, 1)
+		duration = round(int(ride["driving_time"]) / 60000)
+	
 		entities.extend([
-
+	
 			BoschSensor(
 				"last_distance",
 				"Last Ride Distance",
-				round(ride["total_distance"] / 1000,1),
+				distance,
 				"mdi:map-marker-distance",
 				"ride",
 				"km"
 			),
-
+	
 			BoschSensor(
 				"last_duration",
 				"Last Ride Duration",
-				round(ride["driving_time"]/60000),
+				duration,
 				"mdi:timer-outline",
 				"ride",
 				"min"
 			),
-
+	
 			BoschSensor(
 				"last_avg_speed",
 				"Last Ride Average Speed",
-				ride["avg_speed"],
+				float(ride["avg_speed"]),
 				"mdi:speedometer",
 				"ride",
 				"km/h"
 			),
-
+	
 			BoschSensor(
 				"last_max_speed",
 				"Last Ride Max Speed",
-				ride["max_speed"],
+				float(ride["max_speed"]),
 				"mdi:rocket-launch-outline",
 				"ride",
 				"km/h"
 			),
-
+	
 			BoschSensor(
 				"last_calories",
 				"Last Ride Calories",
-				ride["calories"],
+				round(float(ride["calories"])),
 				"mdi:fire",
 				"ride",
 				"kcal"
 			),
-
+	
 			BoschSensor(
 				"last_location",
 				"Last Ride Location",
