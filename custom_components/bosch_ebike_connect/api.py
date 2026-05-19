@@ -57,6 +57,12 @@ class BoschApi:
 				headers=headers
 			) as response:
 
+				print("STATUS:", response.status)
+				
+				text = await response.text()
+				
+				print(text[:1000])
+				
 				return await response.json()
 
 	async def get_trips(self):

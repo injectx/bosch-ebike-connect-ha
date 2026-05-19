@@ -23,8 +23,6 @@ async def async_setup_entry(hass, entry, async_add_entities):
 	
 	]
 
-	entities = []
-
 	# Bike info
 
 	entities.extend([
