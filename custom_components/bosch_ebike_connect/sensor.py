@@ -112,6 +112,39 @@ async def async_setup_entry(hass, entry, async_add_entities):
 		max_altitude = detail.get(
 			"max_altitude"
 		)
+		
+		assist = {
+			1: 0,
+			2: 0,
+			4: 0,
+			9: 0
+		}
+		
+		for item in detail.get(
+			"significant_assistance_level_percentages",
+			[]
+		):
+			assist[item["level"]] = round(
+				item["value"],
+				1
+			)
+		
+		eco = assist[1]
+		tour = assist[2]
+		emtb = assist[4]
+		turbo = assist[9]
+		
+		driver = detail.get(
+			"total_driver_consumption_percentage"
+		)
+		
+		motor = detail.get(
+			"total_battery_consumption_percentage"
+		)
+		
+		avg_driver_power = detail.get(
+			"average_driver_power"
+		)
 
 
 		entities.extend([
@@ -252,7 +285,71 @@ async def async_setup_entry(hass, entry, async_add_entities):
 				),
 				"mdi:counter",
 				"bike"
+			),
+			
+			BoschSensor(
+				"last_eco",
+				"Last Ride Eco",
+				eco,
+				"mdi:leaf",
+				"ride",
+				"%"
+			),
+			
+			BoschSensor(
+				"last_tour",
+				"Last Ride Tour",
+				tour,
+				"mdi:bike",
+				"ride",
+				"%"
+			),
+			
+			BoschSensor(
+				"last_emtb",
+				"Last Ride eMTB",
+				emtb,
+				"mdi:bike-fast",
+				"ride",
+				"%"
+			),
+			
+			BoschSensor(
+				"last_turbo",
+				"Last Ride Turbo",
+				turbo,
+				"mdi:rocket-launch",
+				"ride",
+				"%"
+			),
+			
+			BoschSensor(
+				"last_rider_contribution",
+				"Last Ride Rider Contribution",
+				driver,
+				"mdi:human",
+				"ride",
+				"%"
+			),
+			
+			BoschSensor(
+				"last_motor_contribution",
+				"Last Ride Motor Contribution",
+				motor,
+				"mdi:engine",
+				"ride",
+				"%"
+			),
+			
+			BoschSensor(
+				"last_average_power",
+				"Last Ride Average Rider Power",
+				avg_driver_power,
+				"mdi:lightning-bolt",
+				"ride",
+				"W"
 			)
+			
 
 		])
 
