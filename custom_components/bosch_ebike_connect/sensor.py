@@ -13,14 +13,6 @@ async def async_setup_entry(hass, entry, async_add_entities):
 	
 	entities = [
 	
-		BoschSensor(
-			"debug_detail",
-			"Debug Detail",
-			str(detail)[:255],
-			"mdi:bug",
-			"ride"
-		)
-	
 	]
 
 	# Bike info
@@ -226,42 +218,6 @@ async def async_setup_entry(hass, entry, async_add_entities):
 				"mdi:terrain",
 				"ride",
 				"m"
-			),
-
-			BoschSensor(
-				"last_eco",
-				"Last Ride Eco",
-				eco,
-				"mdi:leaf",
-				"ride",
-				"%"
-			),
-
-			BoschSensor(
-				"last_tour",
-				"Last Ride Tour",
-				tour,
-				"mdi:bike",
-				"ride",
-				"%"
-			),
-
-			BoschSensor(
-				"last_emtb",
-				"Last Ride eMTB",
-				emtb,
-				"mdi:bike-fast",
-				"ride",
-				"%"
-			),
-
-			BoschSensor(
-				"last_turbo",
-				"Last Ride Turbo",
-				turbo,
-				"mdi:rocket-launch",
-				"ride",
-				"%"
 			)
 
 		])

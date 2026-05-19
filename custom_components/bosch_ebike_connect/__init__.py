@@ -32,11 +32,7 @@ async def async_setup_entry(hass, entry):
 		last_detail = await api.get_trip_detail(
 			last_ride_id
 		)
-		
-		LOGGER.warning(
-			"LAST DETAIL: %s",
-			last_detail
-		)
+
 
 	hass.data[DOMAIN][entry.entry_id] = {
 		"api": api,
