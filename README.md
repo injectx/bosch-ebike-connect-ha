@@ -1,5 +1,9 @@
 # Bosch eBike Connect for Home Assistant
 
+<p align="center">
+  <img src="images/logo.png" width="150">
+</p>
+
 Custom Home Assistant integration for older Bosch eBike systems using the Bosch eBike Connect platform.
 
 Supports Bosch System 2 devices such as:

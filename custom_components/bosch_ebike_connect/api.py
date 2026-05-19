@@ -57,3 +57,24 @@ class BoschApi:
 			) as response:
 
 				return await response.json()
+				
+	async def get_trips(self):
+	
+	token = (
+		f"{self.session['token_value']}:"
+		f"{self.session['mobile_id']}"
+	)
+	
+	headers = {
+		"x-authorization": token,
+		"accept": "application/json"
+	}
+	
+	async with aiohttp.ClientSession() as session:
+	
+		async with session.get(
+			"https://www.ebike-connect.com/ebikeconnect/api/app/activities/trip/headers?max=10&offset=0",
+			headers=headers
+		) as response:
+	
+			return await response.json()

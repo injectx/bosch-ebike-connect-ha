@@ -25,6 +25,10 @@ async def async_setup_entry(hass, entry):
 	LOGGER.warning("Bosch login success")
 
 	devices = await api.get_devices()
+	
+	trips = await api.get_trips()
+	
+	LOGGER.warning(f"Bosch trips: {trips}")
 
 	LOGGER.warning("Bosch devices loaded")
 

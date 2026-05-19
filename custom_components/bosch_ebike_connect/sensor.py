@@ -19,7 +19,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
 			"motor",
 			"Bosch Motor",
 			bike["drive_unit"]["product_line_name"],
-			"mdi:engine"
+			"mdi:engine-outline"
 		),
 		BoschSensor(
 			"display",
