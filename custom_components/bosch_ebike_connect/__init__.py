@@ -23,10 +23,21 @@ async def async_setup_entry(hass, entry):
 	devices = await api.get_devices()
 	trips = await api.get_trips()
 
+	last_detail = None
+
+	if trips and trips[0].get("ride_headers"):
+
+		last_ride_id = trips[0]["ride_headers"][-1]["id"]
+
+		last_detail = await api.get_trip_detail(
+			last_ride_id
+		)
+
 	hass.data[DOMAIN][entry.entry_id] = {
 		"api": api,
 		"devices": devices,
-		"trips": trips
+		"trips": trips,
+		"last_detail": last_detail
 	}
 
 	await hass.config_entries.async_forward_entry_setups(

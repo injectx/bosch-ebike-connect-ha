@@ -7,6 +7,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
 
 	devices = data["devices"]
 	trips = data["trips"]
+	detail = data.get("last_detail", {})
 
 	bike = devices["my_ebikes"][0]
 
@@ -87,6 +88,45 @@ async def async_setup_entry(hass, entry, async_add_entities):
 			"Unknown"
 		)
 
+		avg_cadence = detail.get(
+			"avg_cadence"
+		)
+
+		max_cadence = detail.get(
+			"max_cadence"
+		)
+
+		avg_altitude = detail.get(
+			"avg_altitude"
+		)
+
+		max_altitude = detail.get(
+			"max_altitude"
+		)
+
+		assist = {
+			1: 0,
+			2: 0,
+			4: 0,
+			9: 0
+		}
+
+		for item in detail.get(
+			"significant_assistance_level_percentages",
+			[]
+		):
+			assist[
+				item["level"]
+			] = round(
+				item["value"],
+				1
+			)
+
+		eco = assist[1]
+		tour = assist[2]
+		emtb = assist[4]
+		turbo = assist[9]
+
 		entities.extend([
 
 			BoschSensor(
@@ -140,6 +180,78 @@ async def async_setup_entry(hass, entry, async_add_entities):
 				location,
 				"mdi:map-marker",
 				"ride"
+			),
+
+			BoschSensor(
+				"last_avg_cadence",
+				"Last Ride Avg Cadence",
+				avg_cadence,
+				"mdi:rotate-right",
+				"ride",
+				"rpm"
+			),
+
+			BoschSensor(
+				"last_max_cadence",
+				"Last Ride Max Cadence",
+				max_cadence,
+				"mdi:rotate-right",
+				"ride",
+				"rpm"
+			),
+
+			BoschSensor(
+				"last_avg_altitude",
+				"Last Ride Avg Altitude",
+				avg_altitude,
+				"mdi:image-filter-hdr",
+				"ride",
+				"m"
+			),
+
+			BoschSensor(
+				"last_max_altitude",
+				"Last Ride Max Altitude",
+				max_altitude,
+				"mdi:terrain",
+				"ride",
+				"m"
+			),
+
+			BoschSensor(
+				"last_eco",
+				"Last Ride Eco",
+				eco,
+				"mdi:leaf",
+				"ride",
+				"%"
+			),
+
+			BoschSensor(
+				"last_tour",
+				"Last Ride Tour",
+				tour,
+				"mdi:bike",
+				"ride",
+				"%"
+			),
+
+			BoschSensor(
+				"last_emtb",
+				"Last Ride eMTB",
+				emtb,
+				"mdi:bike-fast",
+				"ride",
+				"%"
+			),
+
+			BoschSensor(
+				"last_turbo",
+				"Last Ride Turbo",
+				turbo,
+				"mdi:rocket-launch",
+				"ride",
+				"%"
 			)
 
 		])
