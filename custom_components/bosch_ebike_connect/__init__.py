@@ -27,7 +27,7 @@ async def async_setup_entry(hass, entry):
 
 	if trips and trips[0].get("ride_headers"):
 
-		last_ride_id = trips[0]["ride_headers"][-1]["id"]
+		last_ride_id = trips[0]["id"]
 
 		last_detail = await api.get_trip_detail(
 			last_ride_id
