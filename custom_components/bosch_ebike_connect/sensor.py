@@ -46,51 +46,49 @@ async def async_setup_entry(hass, entry, async_add_entities):
 	])
 
 	# Last ride
-	
-	if trips:
-	
+
+	if trips and trips[0].get("ride_headers"):
+
 		rides = trips[0]["ride_headers"]
-		
+
 		distance = round(
 			sum(float(r["total_distance"]) for r in rides) / 1000,
 			1
 		)
-		
+
 		duration = round(
 			sum(int(r["driving_time"]) for r in rides) / 60000
 		)
-		
+
 		calories = round(
 			sum(float(r["calories"]) for r in rides)
 		)
-		
-		max_speed = max(
-			float(r["max_speed"]) for r in rides
+
+		max_speed = round(
+			max(float(r["max_speed"]) for r in rides),
+			1
 		)
-		
+
+		total_distance_raw = sum(
+			float(r["total_distance"]) for r in rides
+		)
+
 		avg_speed = round(
 			sum(
 				float(r["avg_speed"]) *
 				float(r["total_distance"])
 				for r in rides
-			) /
-			sum(
-				float(r["total_distance"])
-				for r in rides
-			),
+			) / total_distance_raw,
 			1
 		)
-		
+
 		location = rides[-1].get(
 			"title",
 			"Unknown"
 		)
-	
-		distance = round(float(ride["total_distance"]) / 1000, 1)
-		duration = round(int(ride["driving_time"]) / 60000)
-	
+
 		entities.extend([
-	
+
 			BoschSensor(
 				"last_distance",
 				"Last Ride Distance",
@@ -99,7 +97,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
 				"ride",
 				"km"
 			),
-	
+
 			BoschSensor(
 				"last_duration",
 				"Last Ride Duration",
@@ -108,41 +106,42 @@ async def async_setup_entry(hass, entry, async_add_entities):
 				"ride",
 				"min"
 			),
-	
+
 			BoschSensor(
 				"last_avg_speed",
 				"Last Ride Average Speed",
-				float(ride["avg_speed"]),
+				avg_speed,
 				"mdi:speedometer",
 				"ride",
 				"km/h"
 			),
-	
+
 			BoschSensor(
 				"last_max_speed",
 				"Last Ride Max Speed",
-				float(ride["max_speed"]),
+				max_speed,
 				"mdi:rocket-launch-outline",
 				"ride",
 				"km/h"
 			),
-	
+
 			BoschSensor(
 				"last_calories",
 				"Last Ride Calories",
-				round(float(ride["calories"])),
+				calories,
 				"mdi:fire",
 				"ride",
 				"kcal"
 			),
-	
+
 			BoschSensor(
 				"last_location",
 				"Last Ride Location",
-				ride["title"],
+				location,
 				"mdi:map-marker",
 				"ride"
 			)
+
 		])
 
 	async_add_entities(entities)
