@@ -8,6 +8,15 @@ async def async_setup_entry(hass, entry, async_add_entities):
 	devices = data["devices"]
 	trips = data["trips"]
 	detail = data.get("last_detail", {})
+	statistics = data.get(
+		"statistics",
+		{}
+	)
+	
+	all_time = statistics.get(
+		"all_time",
+		{}
+	)
 	
 	bike = devices["my_ebikes"][0]
 	
@@ -104,28 +113,6 @@ async def async_setup_entry(hass, entry, async_add_entities):
 			"max_altitude"
 		)
 
-		assist = {
-			1: 0,
-			2: 0,
-			4: 0,
-			9: 0
-		}
-
-		for item in detail.get(
-			"significant_assistance_level_percentages",
-			[]
-		):
-			assist[
-				item["level"]
-			] = round(
-				item["value"],
-				1
-			)
-
-		eco = assist[1]
-		tour = assist[2]
-		emtb = assist[4]
-		turbo = assist[9]
 
 		entities.extend([
 
@@ -216,6 +203,55 @@ async def async_setup_entry(hass, entry, async_add_entities):
 				"mdi:terrain",
 				"ride",
 				"m"
+			),
+			
+			BoschSensor(
+				"total_distance",
+				"Bosch Total Distance",
+				round(
+					all_time.get(
+						"distance",
+						0
+					) / 1000,
+					1
+				),
+				"mdi:map-marker-distance",
+				"bike",
+				"km"
+			),
+			
+			BoschSensor(
+				"total_elevation",
+				"Bosch Total Elevation",
+				all_time.get(
+					"elevation_gain",
+					0
+				),
+				"mdi:terrain",
+				"bike",
+				"m"
+			),
+			
+			BoschSensor(
+				"total_trips",
+				"Bosch Total Trips",
+				all_time.get(
+					"nr_of_trips",
+					0
+				),
+				"mdi:bike",
+				"bike"
+			),
+			
+			BoschSensor(
+				"total_rides",
+				"Bosch Total Rides",
+				all_time.get(
+					"nr_of_rides",
+					0
+				),
+				"mdi:counter",
+				"bike"
 			)
 
 		])
