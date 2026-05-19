@@ -59,22 +59,28 @@ class BoschApi:
 				return await response.json()
 
 	async def get_trips(self):
-
-		token = (
-			f"{self.session['token_value']}:"
-			f"{self.session['mobile_id']}"
-		)
-
-		headers = {
-			"x-authorization": token,
-			"accept": "application/json"
-		}
-
-		async with aiohttp.ClientSession() as session:
-
-			async with session.get(
-				"https://www.ebike-connect.com/ebikeconnect/api/app/activities/trip/headers?max=10&offset=0",
-				headers=headers
-			) as response:
-
-				return await response.json()
+	
+	import time
+	
+	token = (
+		f"{self.session['token_value']}:"
+		f"{self.session['mobile_id']}"
+	)
+	
+	headers = {
+		"accept": "application/vnd.ebike-connect.com.v4+json, application/json",
+		"protect-from": "CSRF",
+		"user-agent": "oea_ios/4.8.1",
+		"x-authorization": token
+	}
+	
+	timestamp = int(time.time() * 1000)
+	
+	async with aiohttp.ClientSession() as session:
+	
+		async with session.get(
+			f"https://www.ebike-connect.com/ebikeconnect/api/app/activities/trip/headers?max=10&offset={timestamp}",
+			headers=headers
+		) as response:
+	
+			return await response.json()
