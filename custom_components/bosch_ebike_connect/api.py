@@ -12,7 +12,6 @@ class BoschApi:
 		self.password = password
 		self.session = None
 
-
 	async def login(self):
 
 		async with aiohttp.ClientSession() as session:
@@ -36,19 +35,13 @@ class BoschApi:
 				headers=headers
 			) as response:
 
-				data = await response.json()
-
-				self.session = data
-
-				return data
+				self.session = await response.json()
+				return self.session
 
 
 	async def get_devices(self):
 
-		token = (
-			f"{self.session['token_value']}:"
-			f"{self.session['mobile_id']}"
-		)
+		token = f"{self.session['token_value']}:{self.session['mobile_id']}"
 
 		headers = {
 			"x-authorization": token,
@@ -67,10 +60,7 @@ class BoschApi:
 
 	async def get_trips(self):
 
-		token = (
-			f"{self.session['token_value']}:"
-			f"{self.session['mobile_id']}"
-		)
+		token = f"{self.session['token_value']}:{self.session['mobile_id']}"
 
 		headers = {
 			"accept": "application/vnd.ebike-connect.com.v4+json, application/json",
@@ -91,15 +81,12 @@ class BoschApi:
 				return await response.json()
 
 
-	async def get_trip_detail(self, ride_id):
+	async def get_trip_detail(self, trip_id):
 
-		token = (
-			f"{self.session['token_value']}:"
-			f"{self.session['mobile_id']}"
-		)
+		token = f"{self.session['token_value']}:{self.session['mobile_id']}"
 
 		headers = {
-			"accept": "application/vnd.ebike-connect.com.v4+json, application/json",
+			"accept": "application/json",
 			"protect-from": "CSRF",
 			"user-agent": "oea_ios/4.8.1",
 			"x-authorization": token
@@ -108,7 +95,7 @@ class BoschApi:
 		async with aiohttp.ClientSession() as session:
 
 			async with session.get(
-				f"https://www.ebike-connect.com/ebikeconnect/api/activities/trip/details/{ride_id}",
+				f"https://www.ebike-connect.com/ebikeconnect/api/activities/trip/details/{trip_id}",
 				headers=headers
 			) as response:
 
@@ -117,10 +104,7 @@ class BoschApi:
 
 	async def get_statistics(self):
 
-		token = (
-			f"{self.session['token_value']}:"
-			f"{self.session['mobile_id']}"
-		)
+		token = f"{self.session['token_value']}:{self.session['mobile_id']}"
 
 		headers = {
 			"accept": "application/json",
@@ -139,13 +123,6 @@ class BoschApi:
 				_LOGGER.warning(
 					"STATISTICS STATUS: %s",
 					response.status
-				)
-
-				text = await response.text()
-
-				_LOGGER.warning(
-					"STATISTICS RESPONSE: %s",
-					text[:1000]
 				)
 
 				return await response.json()
